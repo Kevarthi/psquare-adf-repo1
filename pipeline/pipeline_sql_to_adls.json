@@ -1,0 +1,118 @@
+{
+	"name": "pipeline_sql_to_adls",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data azure Sql table to ADLS",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.00:05:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dbo.emp_table"
+					},
+					{
+						"name": "Destination",
+						"value": "output/sql_output/emp_table.csv"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "eid",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "empid",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ename",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "empname",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "sal",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "salary",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "deptid",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "deptid",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_AzureSqlTable_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Delimited_Sink",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-08-06T07:16:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

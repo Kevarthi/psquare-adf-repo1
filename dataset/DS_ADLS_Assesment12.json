@@ -1,0 +1,28 @@
+{
+	"name": "DS_ADLS_Assesment12",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage_SINK",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "assesment"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "emp.csv",
+				"folderPath": "csv_output",
+				"fileSystem": "output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "psquare-adff-dev",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7845bb78-a86e-468a-b576-8387924641c9",
+		"tenantId": "2322d4a4-05cc-47bf-ab8b-fffd93061945"
+	}
+}
