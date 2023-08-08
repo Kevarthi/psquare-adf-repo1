@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "psquare-adff-dev"
+		},
+		"AzureBlobStorage_SOURCE_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_SINK_accountKey": {
+			"value": ""
+		},
+		"LS_AzureDataLakeStorage_SOURCE_accountKey": {
+			"value": ""
+		},
+		"LS_AzureSqlDatabase_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_SINK_properties_typeProperties_url": {
+			"value": "https://psquareadlsgen2storageac.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://psquare-kva.vault.azure.net/"
+		},
+		"LS_AzureDataLakeStorage_SOURCE_properties_typeProperties_url": {
+			"value": "https://psquareadlsgen2storageac.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
