@@ -342,7 +342,7 @@
 							"value": "@concat(utcnow(),dataset().TABLE_SCHEMA,'_',dataset().TABLE_NAME,'.csv')",
 							"type": "Expression"
 						},
-						"folderPath": "sql_data",
+						"folderPath": "sql_data2",
 						"fileSystem": "output"
 					},
 					"columnDelimiter": ",",
@@ -589,6 +589,179 @@
 											}
 										}
 									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-08-06T11:02:22Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_AzureSqlTable_Source')]",
+				"[concat(variables('factoryId'), '/datasets/DS_AzureSqlTable_Paramtr')]",
+				"[concat(variables('factoryId'), '/datasets/DS_DelimitedText_Paramtr')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_azuresql_multiple_ingestion1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT TABLE_SCHEMA,TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'SalesLT' AND TABLE_TYPE = 'BASE TABLE'\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzureSqlTable_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Switch1",
+									"type": "Switch",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"on": {
+											"value": "@item().TABLE_SCHEMA",
+											"type": "Expression"
+										},
+										"cases": [
+											{
+												"value": "db1",
+												"activities": [
+													{
+														"name": "Copy data1",
+														"type": "Copy",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "0.12:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"source": {
+																"type": "AzureSqlSource",
+																"queryTimeout": "02:00:00",
+																"partitionOption": "None"
+															},
+															"sink": {
+																"type": "DelimitedTextSink",
+																"storeSettings": {
+																	"type": "AzureBlobFSWriteSettings"
+																},
+																"formatSettings": {
+																	"type": "DelimitedTextWriteSettings",
+																	"quoteAllText": true,
+																	"fileExtension": ".txt"
+																}
+															},
+															"enableStaging": false,
+															"translator": {
+																"type": "TabularTranslator",
+																"typeConversion": true,
+																"typeConversionSettings": {
+																	"allowDataTruncation": true,
+																	"treatBooleanAsNumber": false
+																}
+															}
+														},
+														"inputs": [
+															{
+																"referenceName": "DS_AzureSqlTable_Paramtr",
+																"type": "DatasetReference",
+																"parameters": {
+																	"TABLE_SCHEMA": {
+																		"value": "@item().TABLE_SCHEMA",
+																		"type": "Expression"
+																	},
+																	"TABLE_NAME": {
+																		"value": "@item().TABLE_NAME",
+																		"type": "Expression"
+																	}
+																}
+															}
+														],
+														"outputs": [
+															{
+																"referenceName": "DS_DelimitedText_Paramtr",
+																"type": "DatasetReference",
+																"parameters": {
+																	"TABLE_SCHEMA": {
+																		"value": "@item().TABLE_SCHEMA",
+																		"type": "Expression"
+																	},
+																	"TABLE_NAME": {
+																		"value": "@item().TABLE_NAME",
+																		"type": "Expression"
+																	}
+																}
+															}
+														]
+													}
+												]
+											},
+											{
+												"value": "db2",
+												"activities": [
+													{
+														"name": "Wait1",
+														"type": "Wait",
+														"dependsOn": [],
+														"userProperties": [],
+														"typeProperties": {
+															"waitTimeInSeconds": 1
+														}
+													}
+												]
+											}
+										]
+									}
 								}
 							]
 						}
