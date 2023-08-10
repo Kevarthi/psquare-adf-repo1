@@ -673,6 +673,20 @@
 												"value": "db1",
 												"activities": [
 													{
+														"name": "Wait1",
+														"type": "Wait",
+														"dependsOn": [],
+														"userProperties": [],
+														"typeProperties": {
+															"waitTimeInSeconds": 1
+														}
+													}
+												]
+											},
+											{
+												"value": "SalesLT",
+												"activities": [
+													{
 														"name": "Copy data1",
 														"type": "Copy",
 														"dependsOn": [],
