@@ -684,7 +684,7 @@
 												]
 											},
 											{
-												"value": "SalesLT",
+												"value": "db2",
 												"activities": [
 													{
 														"name": "Copy data1",
