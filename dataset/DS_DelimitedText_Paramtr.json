@@ -22,7 +22,7 @@
 					"value": "@concat(utcnow(),dataset().TABLE_SCHEMA,'_',dataset().TABLE_NAME,'.csv')",
 					"type": "Expression"
 				},
-				"folderPath": "sql_data",
+				"folderPath": "sql_data2",
 				"fileSystem": "output"
 			},
 			"columnDelimiter": ",",
