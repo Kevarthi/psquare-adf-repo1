@@ -1,6 +1,12 @@
 {
 	"name": "psquare-adff-dev",
 	"properties": {
+		"globalParameters": {
+			"env": {
+				"type": "string",
+				"value": "dev"
+			}
+		},
 		"globalConfigurations": {
 			"PolicyValidationEnabled": "false",
 			"PipelineBillingEnabled": "false"
