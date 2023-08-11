@@ -2,7 +2,8 @@
 	"name": "psquare-adff-dev",
 	"properties": {
 		"globalConfigurations": {
-			"PolicyValidationEnabled": "false"
+			"PolicyValidationEnabled": "false",
+			"PipelineBillingEnabled": "true"
 		}
 	},
 	"location": "eastus",
