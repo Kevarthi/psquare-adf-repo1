@@ -250,6 +250,11 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"parameters": {
+					"file_name": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"lastPublishTime": "2023-08-06T11:02:22Z"
 			},
@@ -760,7 +765,10 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "LS_AzureSqlDatabase",
-					"type": "LinkedServiceReference"
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "psquare-azure-sql-dev-db"
+					}
 				},
 				"parameters": {
 					"TABLE_SCHEMA": {
@@ -980,6 +988,11 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"parameters": {
+					"database": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
