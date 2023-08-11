@@ -61,7 +61,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> deptsource",
-				"empsource, deptsource join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"empsource, deptsource join(eid == deptsource@deptid,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
