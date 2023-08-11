@@ -8,7 +8,7 @@
 			}
 		},
 		"globalConfigurations": {
-			"PolicyValidationEnabled": "true"
+			"PolicyValidationEnabled": "false"
 		}
 	},
 	"location": "eastus",
