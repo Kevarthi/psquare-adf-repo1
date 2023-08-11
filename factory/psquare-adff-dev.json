@@ -3,7 +3,7 @@
 	"properties": {
 		"globalConfigurations": {
 			"PolicyValidationEnabled": "false",
-			"PipelineBillingEnabled": "true"
+			"PipelineBillingEnabled": "false"
 		}
 	},
 	"location": "eastus",
