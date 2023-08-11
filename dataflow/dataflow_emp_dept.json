@@ -10,10 +10,40 @@
 						"type": "DatasetReference"
 					},
 					"name": "empsource"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "deptsource"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "select1",
+					"description": "Renaming join1 to select1 with columns 'eid, ename, sal, deptname'"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn1",
+					"description": "Creating/updating the columns 'eid, ename, sal, deptid, deptname'"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          eid as string,",
@@ -23,7 +53,38 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> empsource"
+				"     ignoreNoFilesFound: false) ~> empsource",
+				"source(output(",
+				"          deptid as string,",
+				"          deptname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> deptsource",
+				"empsource, deptsource join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          eid,",
+				"          ename,",
+				"          sal,",
+				"          deptid = empsource@deptid,",
+				"          deptid = deptsource@deptid,",
+				"          deptname",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(deptname) ~> filter1",
+				"filter1 derive() ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
