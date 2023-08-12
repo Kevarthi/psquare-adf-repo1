@@ -306,6 +306,7 @@
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
+						"     outputAssertFailedRows: true,",
 						"     mapColumn(",
 						"          eid,",
 						"          ename,",
