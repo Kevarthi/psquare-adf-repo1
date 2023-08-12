@@ -80,11 +80,18 @@
 				"filter1 derive() ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['emp and dept data'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          eid,",
+				"          ename,",
+				"          sal,",
+				"          deptname",
+				"     )) ~> sink1"
 			]
 		}
 	}
