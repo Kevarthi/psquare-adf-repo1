@@ -494,8 +494,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "json",
-						"folderPath": "dataflows",
+						"folderPath": "dataflows/json",
 						"fileSystem": "output"
 					}
 				},
