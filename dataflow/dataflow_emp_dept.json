@@ -22,7 +22,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText3",
+						"referenceName": "Json1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -81,13 +81,12 @@
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
 				"          eid,",
 				"          ename,",
 				"          sal,",
-				"          deptname",
+				"          deptname,",
+				"          country",
 				"     ),",
 				"     partitionBy('hash', 1)) ~> sink1"
 			]
