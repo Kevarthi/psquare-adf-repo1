@@ -40,8 +40,7 @@
 					"name": "filter1"
 				},
 				{
-					"name": "derivedColumn1",
-					"description": "Creating/updating the columns 'eid, ename, sal, deptid, deptname'"
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -70,14 +69,12 @@
 				"          eid,",
 				"          ename,",
 				"          sal,",
-				"          deptid = empsource@deptid,",
-				"          deptid = deptsource@deptid,",
 				"          deptname",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(deptname) ~> filter1",
-				"filter1 derive() ~> derivedColumn1",
+				"select1 filter(equals(deptname,'D&A')) ~> filter1",
+				"filter1 derive(country = char(100)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['emp and dept data'],",
